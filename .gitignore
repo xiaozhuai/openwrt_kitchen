@@ -1,0 +1,10 @@
+.idea
+.vscode
+.DS_Store
+config.user.sh
+imgs/*
+!imgs/.gitkeep
+rootfs_override/*
+!rootfs_override/.gitkeep
+kitchen/user_scripts.d/*
+!kitchen/user_scripts.d/.gitkeep
