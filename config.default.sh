@@ -4,16 +4,34 @@ export LUCI_TIMEZONE=UTC
 
 export LUCI_LANGUAGE=
 
-export USE_OPENSSL=true
-
 export USE_DNSMASQ_FULL=true
 
 export INSTALL_BASH=true
 export LOGIN_SHELL_BASH=true
 
+export USE_OPENSSL=true
+
+export INSTALL_BLOCK_MOUNT=true
+
 export INSTALL_KMOD_IGC=true
 export INSTALL_KMOD_TUN=true
+export INSTALL_KMOD_USB_STORAGE=true
+export INSTALL_KMOD_USB_STORAGE_EXTRAS=true
+export INSTALL_KMOD_USB_STORAGE_UAS=true
+export INSTALL_KMOD_SCSI_CORE=true
+export INSTALL_KMOD_USB2=true
+export INSTALL_KMOD_USB3=true
+export INSTALL_KMOD_USB_EHCI=true
+export INSTALL_KMOD_FS_EXT4=true
+export INSTALL_KMOD_FS_F2FS=true
+export INSTALL_KMOD_FS_BTRFS=true
+export INSTALL_KMOD_FS_MSDOS=true
+export INSTALL_KMOD_FS_VFAT=true
+export INSTALL_KMOD_FS_EXFAT=true
+export INSTALL_KMOD_FS_NTFS=true
+export INSTALL_KMOD_FS_XFS=true
 
+export INSTALL_ANNOUNCE=true
 export INSTALL_OPENSSH_SFTP_SERVER=true
 export INSTALL_SHADOW_CHSH=true
 export INSTALL_CURL=true
@@ -24,5 +42,27 @@ export INSTALL_IP_FULL=true
 export INSTALL_PARTED=true
 export INSTALL_RESIZE2FS=true
 export INSTALL_VIM_VERSION=vim-full
+export INSTALL_E2FSPROGS=true
+export INSTALL_F2FS_TOOLS=true
+export INSTALL_DOSFSTOOLS=true
 
 export INSTALL_LUCI_WOL=true
+export INSTALL_LUCI_UHTTPD=true
+export INSTALL_LUCI_WIREGUARD=true
+export INSTALL_LUCI_SAMBA4=false
+export INSTALL_LUCI_MINIDLNA=false
+export INSTALL_LUCI_UPNP=true
+export INSTALL_LUCI_WATCHCAT=true
+export INSTALL_LUCI_TTYD=false
+export INSTALL_LUCI_FRPC=false
+export INSTALL_LUCI_FRPS=false
+export INSTALL_LUCI_QOS=false
+export INSTALL_LUCI_NFT_QOS=false
+export INSTALL_LUCI_NLBWMON=false
+export INSTALL_LUCI_COMMANDS=false
+export INSTALL_LUCI_MWAN3=false
+export INSTALL_LUCI_ALIDDNS=true
+
+export INSTALL_LUCI_THEME_MATERIAL=true
+export INSTALL_LUCI_THEME_ARGON=true
+export LUCI_THEME=Argon

@@ -29,6 +29,18 @@ install_app_by_cond() {
   fi
 }
 
+download_and_install_by_cond() {
+    if [ "$1" = "true" ]; then
+      echo "  - Install $2"
+      tmp_file="$(mktemp)"
+      rm -f "${tmp_file}"
+      tmp_file="${tmp_file}.ipk"
+      wget -q -O "${tmp_file}" "$2"
+      opkg install "${tmp_file}"
+      rm -f "${tmp_file}"
+    fi
+}
+
 echo "- Prepare ssl"
 cp -f /etc/opkg/distfeeds.conf /etc/opkg/distfeeds.conf.bak
 sed -i 's/https:/http:/' /etc/opkg/distfeeds.conf
