@@ -39,10 +39,13 @@ export INSTALL_CURL=true
 export INSTALL_LSOF=true
 export INSTALL_JQ=true
 export INSTALL_GIT=true
-export INSTALL_IP_FULL=true
+export INSTALL_IP_VERSION=ip-full
 export INSTALL_PARTED=true
 export INSTALL_RESIZE2FS=true
 export INSTALL_VIM_VERSION=vim-full
+export INSTALL_ETHTOOL=true
+export INSTALL_ETHINFO=true
+
 export INSTALL_E2FSPROGS=true
 export INSTALL_F2FS_TOOLS=true
 export INSTALL_DOSFSTOOLS=true
@@ -98,3 +101,7 @@ export INSTALL_LUCI_THEME_BOOTSTRAP=true
 export INSTALL_LUCI_THEME_MATERIAL=true
 export INSTALL_LUCI_THEME_ARGON=true
 export LUCI_THEME=Argon
+
+export LUCI_DIAG_URL="openwrt.org"
+
+export NTP_SERVERS="0.openwrt.pool.ntp.org 1.openwrt.pool.ntp.org 2.openwrt.pool.ntp.org 3.openwrt.pool.ntp.org"

@@ -5,10 +5,17 @@ install_by_cond "${INSTALL_CURL}" curl
 install_by_cond "${INSTALL_LSOF}" lsof
 install_by_cond "${INSTALL_JQ}" jq
 install_by_cond "${INSTALL_GIT}" git
-install_by_cond "${INSTALL_IP_FULL}" ip-full
+install_by_version "${INSTALL_IP_VERSION}"
 install_by_cond "${INSTALL_PARTED}" parted
 install_by_cond "${INSTALL_RESIZE2FS}" resize2fs
 install_by_version "${INSTALL_VIM_VERSION}"
+install_by_cond "${INSTALL_ETHTOOL}" ethtool
+if [ "${INSTALL_ETHINFO}" = "true" ]; then
+  echo "  - Install ethinfo"
+  [ -z "$(which -a ip)" ] && opkg install ip-full
+  [ -z "$(which -a ethtool)" ] && opkg install ethtool
+  cp -f ../assets/ethinfo /usr/bin/
+fi
 
 install_by_cond "${INSTALL_E2FSPROGS}" e2fsprogs
 install_by_cond "${INSTALL_F2FS_TOOLS}" f2fs-tools
