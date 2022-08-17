@@ -106,3 +106,5 @@ export LUCI_CCACHE_ENABLE=1
 export LUCI_DIAG_URL="openwrt.org"
 
 export NTP_SERVERS="0.openwrt.pool.ntp.org 1.openwrt.pool.ntp.org 2.openwrt.pool.ntp.org 3.openwrt.pool.ntp.org"
+
+export ROOT_PASSWORD=""
