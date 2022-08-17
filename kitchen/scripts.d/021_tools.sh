@@ -13,3 +13,8 @@ install_by_version "${INSTALL_VIM_VERSION}"
 install_by_cond "${INSTALL_E2FSPROGS}" e2fsprogs
 install_by_cond "${INSTALL_F2FS_TOOLS}" f2fs-tools
 install_by_cond "${INSTALL_DOSFSTOOLS}" dosfstools
+
+install_by_cond "${INSTALL_DOCKER}" docker
+install_by_cond "${INSTALL_DOCKERD}" dockerd
+install_by_cond "${INSTALL_DOCKER_COMPOSE}" docker-compose
+
