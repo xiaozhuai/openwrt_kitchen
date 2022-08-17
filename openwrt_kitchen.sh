@@ -39,10 +39,11 @@ fi
 cleanup() {
   if [[ "${cleaned}" == "false" ]]; then
     cleaned=true
-
+    umount "${output_img_mount_point}/proc"
     echo "- Cleanup"
     if [[ -n "${output_img_mount_point}" ]]; then
       rm -rf "${output_img_mount_point}/var/lock"
+      rm -rf "${output_img_mount_point}/tmp/.uci"
       rm -rf "${output_img_mount_point}/kitchen"
       rm -f "${output_img_mount_point}/config.default.sh"
       if [[ -f "${output_img_mount_point}/config.user.sh" ]]; then
@@ -110,7 +111,9 @@ output_img_mount_point="${tmp_mount_point}"
 echo "- Mounted ${output_img_device}p2 --> ${output_img_mount_point}"
 
 echo "- Prepare chroot"
+mount -t proc /proc "${output_img_mount_point}/proc"
 mkdir -p "${output_img_mount_point}/var/lock"
+mkdir -p "${output_img_mount_point}/tmp/.uci"
 cp -rf "${base_dir}/kitchen" "${output_img_mount_point}/"
 cp -f "${base_dir}/config.default.sh" "${output_img_mount_point}/"
 if [[ -f "${base_dir}/config.user.sh" ]]; then
