@@ -121,8 +121,12 @@ mkdir "${output_img_mount_point}/tmp/resolv.conf.d"
 
 chroot "${output_img_mount_point}" /kitchen/entrypoint.sh
 
-echo "- Copy rootfs_override/* to /"
-cp -rf "${base_dir}/rootfs_override"/* "${output_img_mount_point}/"
+if [[ -z "$(ls "${base_dir}/rootfs_override")" ]]; then
+  echo "- Skip copy rootfs_override/* to /"
+else
+  echo "- Copy rootfs_override/* to /"
+  cp -rf "${base_dir}/rootfs_override"/* "${output_img_mount_point}/"
+fi
 rm -f "${output_img_mount_point}/.gitkeep"
 
 finished=true
