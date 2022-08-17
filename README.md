@@ -23,9 +23,10 @@ OpenWRT厨房，定制您的专属OpenWRT固件，生成可直接刷写的镜像
 
 例如：
 
-`export LUCI_LANGUAGE=` 默认未配置语言，
-
-如果想要改为中文简体，则可以新建 `config.user.sh` 文件并写入
+```sh
+export LUCI_LANGUAGE=
+``` 
+默认未配置语言，如果想要改为中文简体，则可以新建 `config.user.sh` 文件并写入
 
 ```sh
 export LUCI_LANGUAGE="zh-cn"
