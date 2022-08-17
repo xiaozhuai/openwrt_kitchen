@@ -9,7 +9,6 @@ input_img_gzipped=false
 output_img_device=""
 output_img_mount_point=""
 cleaned=false
-finished=false
 
 if [[ -z "${input_img}" ]]; then
   echo "Usage: customize-openwrt.sh input_img [output_img]"
@@ -62,10 +61,12 @@ cleanup() {
       losetup -d "${output_img_device}"
       output_img_device=""
     fi
-    if [[ "${finished}" == "false" ]]; then
+    local suc="$1"
+    if [[ -z "${suc}" ]]; then
       echo "- Remove ${output_img}"
       rm -f "${output_img}"
       echo "- Error occurred!"
+      exit 1
     fi
   fi
 }
@@ -136,8 +137,8 @@ else
 fi
 rm -f "${output_img_mount_point}/.gitkeep"
 
-finished=true
+#chroot "${output_img_mount_point}" /bin/sh
 
-cleanup
+cleanup true
 
 echo "- Done!"
