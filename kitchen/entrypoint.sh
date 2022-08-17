@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+. /etc/os-release
+
 fix_resolv_conf() {
   cmp -s /tmp/resolv.conf /tmp/resolv.conf.bak || cp -f /tmp/resolv.conf.bak /tmp/resolv.conf
 }
