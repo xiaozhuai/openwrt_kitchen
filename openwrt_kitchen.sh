@@ -39,6 +39,7 @@ fi
 cleanup() {
   if [[ "${cleaned}" == "false" ]]; then
     cleaned=true
+
     echo "- Cleanup"
     if [[ -n "${output_img_mount_point}" ]]; then
       rm -rf "${output_img_mount_point}/var/lock"
@@ -63,6 +64,7 @@ cleanup() {
     if [[ "${finished}" == "false" ]]; then
       echo "- Remove ${output_img}"
       rm -f "${output_img}"
+      echo "- Error occurred!"
     fi
   fi
 }
