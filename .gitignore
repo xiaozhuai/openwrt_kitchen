@@ -2,6 +2,8 @@
 .vscode
 .DS_Store
 config.user.sh
+dist/*
+!dist/.gitkeep
 imgs/*
 !imgs/.gitkeep
 rootfs_override/*

@@ -9,6 +9,7 @@ input_img_gzipped=false
 output_img_device=""
 output_img_mount_point=""
 cleaned=false
+finished=false
 
 if [[ -z "${input_img}" ]]; then
   echo "Usage: customize-openwrt.sh input_img [output_img]"
@@ -32,7 +33,7 @@ if [[ -z "${output_img}" ]]; then
   else
     img_file_name="$(basename "${input_img}" .img)"
   fi
-  output_img="$(dirname "${input_img}")/${img_file_name}-cooked.img"
+  output_img="${base_dir}/dist/${img_file_name}-cooked.img"
 fi
 
 cleanup() {
@@ -58,6 +59,10 @@ cleanup() {
       echo "- Detach ${output_img_device} --> ${output_img}"
       losetup -d "${output_img_device}"
       output_img_device=""
+    fi
+    if [[ "${finished}" == "false" ]]; then
+      echo "- Remove ${output_img}"
+      rm -f "${output_img}"
     fi
   fi
 }
@@ -119,6 +124,8 @@ chroot "${output_img_mount_point}" /kitchen/entrypoint.sh
 echo "- Copy rootfs_override/* to /"
 cp -rf "${base_dir}/rootfs_override"/* "${output_img_mount_point}/"
 rm -f "${output_img_mount_point}/.gitkeep"
+
+finished=true
 
 cleanup
 
