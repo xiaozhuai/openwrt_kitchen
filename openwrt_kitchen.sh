@@ -25,7 +25,7 @@ if [[ "${input_img}" == *.gz ]]; then
   input_img_gzipped=true
 fi
 
-[[ "$(whoami)" != "root" ]] && echo "Please run as root" && exit 1
+[[ "$(id -u)" != "0" ]] && echo "Please run as root" && exit 1
 
 if [[ -z "${output_img}" ]]; then
   if [[ "${input_img_gzipped}" == "true" ]]; then
