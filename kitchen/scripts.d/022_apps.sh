@@ -33,13 +33,15 @@ install_app_by_cond "${INSTALL_LUCI_SNMPD}" snmpd
 install_app_by_cond "${INSTALL_LUCI_TRANSMISSION}" transmission
 download_and_install_by_cond "${INSTALL_LUCI_ALIDDNS}" "https://github.com/honwen/luci-app-aliddns/releases/download/v20210117/luci-app-aliddns_0.4.0-1_all.ipk"
 install_app_by_cond "${INSTALL_LUCI_DDNS}" ddns
-install_by_cond "${INSTALL_DDNS_SCRIPTS}" ddns-scripts
-install_by_cond "${INSTALL_DDNS_SCRIPTS_CLOUDFLARE}" ddns-scripts-cloudflare
-install_by_cond "${INSTALL_DDNS_SCRIPTS_CNKUAI}" ddns-scripts-cnkuai
-install_by_cond "${INSTALL_DDNS_SCRIPTS_DIGITALOCEAN}" ddns-scripts-digitalocean
-install_by_cond "${INSTALL_DDNS_SCRIPTS_FREEDNS}" ddns-scripts-freedns
-install_by_cond "${INSTALL_DDNS_SCRIPTS_GANDI}" ddns-scripts-gandi
-install_by_cond "${INSTALL_DDNS_SCRIPTS_GODADDY}" ddns-scripts-godaddy
-install_by_cond "${INSTALL_DDNS_SCRIPTS_NOIP}" ddns-scripts-noip
-install_by_cond "${INSTALL_DDNS_SCRIPTS_NSUPDATE}" ddns-scripts-nsupdate
-install_by_cond "${INSTALL_DDNS_SCRIPTS_ROUTE53}" ddns-scripts-route53
+if [ "${INSTALL_LUCI_DDNS}" = "true" ]; then
+  install_by_cond "${INSTALL_DDNS_SCRIPTS}" ddns-scripts
+  install_by_cond "${INSTALL_DDNS_SCRIPTS_CLOUDFLARE}" ddns-scripts-cloudflare
+  install_by_cond "${INSTALL_DDNS_SCRIPTS_CNKUAI}" ddns-scripts-cnkuai
+  install_by_cond "${INSTALL_DDNS_SCRIPTS_DIGITALOCEAN}" ddns-scripts-digitalocean
+  install_by_cond "${INSTALL_DDNS_SCRIPTS_FREEDNS}" ddns-scripts-freedns
+  install_by_cond "${INSTALL_DDNS_SCRIPTS_GANDI}" ddns-scripts-gandi
+  install_by_cond "${INSTALL_DDNS_SCRIPTS_GODADDY}" ddns-scripts-godaddy
+  install_by_cond "${INSTALL_DDNS_SCRIPTS_NOIP}" ddns-scripts-noip
+  install_by_cond "${INSTALL_DDNS_SCRIPTS_NSUPDATE}" ddns-scripts-nsupdate
+  install_by_cond "${INSTALL_DDNS_SCRIPTS_ROUTE53}" ddns-scripts-route53
+fi

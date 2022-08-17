@@ -8,6 +8,7 @@ export USE_DNSMASQ_FULL=true
 
 export INSTALL_BASH=true
 export LOGIN_SHELL_BASH=true
+export USE_DEFAULT_BASH_PROFILE=true
 
 export USE_OPENSSL=true
 

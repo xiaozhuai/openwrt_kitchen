@@ -1,0 +1,25 @@
+update_ps1_git_branch () {
+    if [ -z "$(which -a git)" ]; then
+        ps1_git_branch=""
+    else
+        local dir=. head
+        until [ "$dir" -ef / ]; do
+            if [ -f "$dir/.git/HEAD" ]; then
+                head=$(< "$dir/.git/HEAD")
+                if [[ $head = ref:\ refs/heads/* ]]; then
+                    ps1_git_branch="(${head#*/*/}) "
+                elif [[ $head != '' ]]; then
+                    ps1_git_branch="(detached) "
+                else
+                    ps1_git_branch=""
+                fi
+                return
+            fi
+            dir="../$dir"
+        done
+        ps1_git_branch=""
+    fi
+}
+export -f update_ps1_git_branch
+export PROMPT_COMMAND="update_ps1_git_branch; $PROMPT_COMMAND"
+export PS1="\[\e[34m\]\u@\h \[\e[32m\]\w \[\e[33m\]\$ps1_git_branch\[\e[35m\]\\$ \[\e[0m\]"
