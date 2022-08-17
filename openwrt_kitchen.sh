@@ -39,7 +39,7 @@ fi
 cleanup() {
   if [[ "${cleaned}" == "false" ]]; then
     cleaned=true
-    umount "${output_img_mount_point}/proc"
+    sync
     echo "- Cleanup"
     if [[ -n "${output_img_mount_point}" ]]; then
       rm -rf "${output_img_mount_point}/var/lock"
@@ -54,7 +54,7 @@ cleanup() {
       rm -rf "${output_img_mount_point}/tmp/resolv.conf.d"
       rm -rf "${output_img_mount_point}"/tmp/*
       echo "- Unmount ${output_img_device}p2 --> ${output_img_mount_point}"
-      umount "${output_img_mount_point}"
+      umount -R "${output_img_mount_point}"
       rm -rf "${output_img_mount_point}"
     fi
     if [[ -n "${output_img_device}" ]]; then
@@ -112,6 +112,8 @@ echo "- Mounted ${output_img_device}p2 --> ${output_img_mount_point}"
 
 echo "- Prepare chroot"
 mount -t proc /proc "${output_img_mount_point}/proc"
+mount --rbind /sys "${output_img_mount_point}/sys"
+mount --rbind /dev "${output_img_mount_point}/dev"
 mkdir -p "${output_img_mount_point}/var/lock"
 mkdir -p "${output_img_mount_point}/tmp/.uci"
 cp -rf "${base_dir}/kitchen" "${output_img_mount_point}/"
