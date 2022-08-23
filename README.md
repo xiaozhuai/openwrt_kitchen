@@ -2,7 +2,7 @@
 
 OpenWrt厨房，定制您的专属OpenWrt固件，生成可直接刷写的镜像文件。
 
-可在 [Actions](https://github.com/xiaozhuai/openwrt_kitchen/actions) 页面下载使用默认配置的镜像文件.
+可在 [Actions](https://github.com/xiaozhuai/openwrt_kitchen/actions) 页面下载使用默认配置构建的镜像文件.
 
 [![OpenWrt-21](https://github.com/xiaozhuai/openwrt_kitchen/actions/workflows/OpenWrt-21.yml/badge.svg)](https://github.com/xiaozhuai/openwrt_kitchen/actions/workflows/OpenWrt-21.yml)
 
