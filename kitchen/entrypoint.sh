@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 
+kitchen_dir="/tmp/kitchen"
+cd ${kitchen_dir}
+
 . /etc/os-release
 
 fix_resolv_conf() {
@@ -55,33 +58,33 @@ mv -f /etc/opkg/distfeeds.conf.bak /etc/opkg/distfeeds.conf
 cat /etc/opkg/distfeeds.conf
 
 echo "- Load config"
-. /config.default.sh
+. ${kitchen_dir}/config.default.sh
 if [ -f "/config.user.sh" ]; then
-  . /config.user.sh
+  . ${kitchen_dir}/config.user.sh
 fi
 
 echo "- Exec scripts"
-cd /kitchen/scripts.d
+cd ${kitchen_dir}/scripts.d
 for script in *.sh; do
   if [ -r "${script}" ]; then
     echo "- Exec ${script}"
-    cd /kitchen/scripts.d
-    . "./$script"
+    cd ${kitchen_dir}/scripts.d
+    . "${kitchen_dir}/scripts.d/${script}"
     fix_resolv_conf
   fi
 done
 unset script
-cd /
+cd ${kitchen_dir}
 
 echo "- Exec user scripts"
-cd /kitchen/user_scripts.d
+cd ${kitchen_dir}/user_scripts.d
 for script in *.sh; do
   if [ -r "${script}" ]; then
     echo "- Exec ${script}"
-    cd /kitchen/user_scripts.d
-    . "./$script"
+    cd ${kitchen_dir}/user_scripts.d
+    . "${kitchen_dir}/user_scripts.d/${script}"
     fix_resolv_conf
   fi
 done
 unset script
-cd /
+cd ${kitchen_dir}

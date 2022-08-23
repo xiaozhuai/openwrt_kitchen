@@ -48,11 +48,7 @@ cleanup() {
     if [[ -n "${output_img_mount_point}" ]]; then
       rm -rf "${output_img_mount_point}/var/lock"
       rm -rf "${output_img_mount_point}/tmp/.uci"
-      rm -rf "${output_img_mount_point}/kitchen"
-      rm -f "${output_img_mount_point}/config.default.sh"
-      if [[ -f "${output_img_mount_point}/config.user.sh" ]]; then
-        rm -f "${output_img_mount_point}/config.user.sh"
-      fi
+      rm -rf "${output_img_mount_point}/tmp/kitchen"
       rm -f "${output_img_mount_point}/tmp/resolv.conf"
       rm -f "${output_img_mount_point}/tmp/resolv.conf.bak"
       rm -rf "${output_img_mount_point}/tmp/resolv.conf.d"
@@ -121,17 +117,17 @@ mount --rbind /sys "${output_img_mount_point}/sys"
 mount --rbind /dev "${output_img_mount_point}/dev"
 mkdir -p "${output_img_mount_point}/var/lock"
 mkdir -p "${output_img_mount_point}/tmp/.uci"
-cp -rf "${base_dir}/kitchen" "${output_img_mount_point}/"
-cp -f "${base_dir}/config.default.sh" "${output_img_mount_point}/"
+cp -rf "${base_dir}/kitchen" "${output_img_mount_point}/tmp/"
+cp -f "${base_dir}/config.default.sh" "${output_img_mount_point}/tmp/kitchen/"
 if [[ -f "${base_dir}/config.user.sh" ]]; then
-  cp -f "${base_dir}/config.user.sh" "${output_img_mount_point}/"
+  cp -f "${base_dir}/config.user.sh" "${output_img_mount_point}/tmp/kitchen/"
 fi
 echo "nameserver 8.8.8.8" >"${output_img_mount_point}/tmp/resolv.conf"
 echo "nameserver 223.5.5.5" >>"${output_img_mount_point}/tmp/resolv.conf"
 cp -f "${output_img_mount_point}/tmp/resolv.conf" "${output_img_mount_point}/tmp/resolv.conf.bak"
 mkdir "${output_img_mount_point}/tmp/resolv.conf.d"
 
-chroot "${output_img_mount_point}" /kitchen/entrypoint.sh
+chroot "${output_img_mount_point}" /tmp/kitchen/entrypoint.sh
 
 if [[ -z "$(ls "${base_dir}/rootfs_override")" ]]; then
   echo "- Skip copy rootfs_override/* to /"
