@@ -4,7 +4,7 @@ set -e
 base_dir="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 input_img="$1"
 output_img="$2"
-img_size="1024" # MB
+img_size="512" # MB
 input_img_gzipped=false
 output_img_device=""
 output_img_mount_point=""
@@ -26,6 +26,10 @@ fi
 
 [[ "$(id -u)" != "0" ]] && echo "Please run as root" && exit 1
 
+[[ -z "$(which -a parted)" ]] && echo "Please install parted" && exit 1
+
+[[ -z "$(which -a resize2fs)" ]] && echo "Please install resize2fs" && exit 1
+
 if [[ -z "${output_img}" ]]; then
   if [[ "${input_img_gzipped}" == "true" ]]; then
     img_file_name="$(basename "${input_img}" .img.gz)"
@@ -36,6 +40,7 @@ if [[ -z "${output_img}" ]]; then
 fi
 
 cleanup() {
+  local suc="$1"
   if [[ "${cleaned}" == "false" ]]; then
     cleaned=true
     sync
@@ -61,7 +66,6 @@ cleanup() {
       losetup -d "${output_img_device}"
       output_img_device=""
     fi
-    local suc="$1"
     if [[ -z "${suc}" ]]; then
       echo "- Remove ${output_img}"
       rm -f "${output_img}"
@@ -86,9 +90,9 @@ echo "- Attached ${output_img_device} --> ${output_img}"
 
 echo "- Flash ${input_img} --> ${output_img_device}"
 if [[ "${input_img_gzipped}" == "true" ]]; then
-  gzip -qdc "${input_img}" | dd of="${output_img_device}" bs=16M status=none
+  gzip -qdc "${input_img}" | dd of="${output_img_device}" bs=4M status=none
 else
-  dd if="${input_img}" of="${output_img_device}" bs=16M status=none
+  dd if="${input_img}" of="${output_img_device}" bs=4M status=none
 fi
 sync
 
