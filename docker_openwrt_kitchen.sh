@@ -11,7 +11,10 @@ if [[ -n "${old_id}" && "${old_id}" != "${new_id}" ]]; then
   docker image rm "${old_id}"
 fi
 
-docker run --rm -it \
+tty_op=""
+[[ -t 1 ]] && tty_op="-it"
+
+docker run --rm ${tty_op} \
   --privileged \
   --name openwrt_kitchen \
   --hostname openwrt_kitchen \

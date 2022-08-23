@@ -1,13 +1,19 @@
-# OpenWRT Kitchen
+# OpenWrt Kitchen
 
-OpenWRT厨房，定制您的专属OpenWRT固件，生成可直接刷写的镜像文件。
+OpenWrt厨房，定制您的专属OpenWrt固件，生成可直接刷写的镜像文件。
+
+可在 [Actions](https://github.com/xiaozhuai/openwrt_kitchen/actions) 页面下载使用默认配置的镜像文件.
+
+[![OpenWrt-21](https://github.com/xiaozhuai/openwrt_kitchen/actions/workflows/OpenWrt-21.yml/badge.svg)](https://github.com/xiaozhuai/openwrt_kitchen/actions/workflows/OpenWrt-21.yml)
+
+[![OpenWrt-22](https://github.com/xiaozhuai/openwrt_kitchen/actions/workflows/OpenWrt-22.yml/badge.svg)](https://github.com/xiaozhuai/openwrt_kitchen/actions/workflows/OpenWrt-22.yml)
 
 * 仅支持 `x86-64` 架构
 * 目前仅支持 `ext4` 文件系统的镜像文件
 * 目前仅支持 `mbr` 模式的镜像文件
 * 支持输入经过gzip压缩后的镜像文件
-* 支持 OpenWRT 21.*
-* 支持 OpenWRT 22.*
+* 支持 OpenWrt 21.*
+* 支持 OpenWrt 22.*
 
 ## TODO
 * [ ] 支持 `squashfs` 文件系统的镜像文件
@@ -58,9 +64,14 @@ git会忽略此目录下的任何更改
 
 ## 使用说明
 
-下载OpenWRT镜像文件，放入 `imgs` 目录。然后执行
+需要Linux环境，下载OpenWrt镜像文件，放入 `imgs` 目录。然后执行
 ```sh
-./openwrt_kitchen.sh imgs/openwrt-22.03.0-rc6-x86-64-generic-ext4-combined.img.gz
+sudo ./openwrt_kitchen.sh imgs/openwrt-21.02.3-x86-64-generic-ext4-combined.img.gz
+```
+
+如果你没有linux环境，则亦可使用docker
+```sh
+./docker_openwrt_kitchen.sh imgs/openwrt-21.02.3-x86-64-generic-ext4-combined.img.gz
 ```
 
 ## 如何贡献
