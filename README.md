@@ -14,12 +14,13 @@ OpenWrt厨房，定制您的专属OpenWrt固件，生成可直接刷写的镜像
 * 支持输入经过gzip压缩后的镜像文件
 * 支持 OpenWrt 21.*
 * 支持 OpenWrt 22.*
+* 支持 Docker 构建
+* 支持 Github Actions 构建
 
 ## TODO
 * [ ] 支持 `squashfs` 文件系统的镜像文件
 * [ ] 支持 `efi` 模式的镜像文件
 * [ ] 支持自定义镜像文件总容量
-* [ ] github actions
 * [ ] 支持在网页上定制各项配置，并导出配置
 * [ ] 支持切换用户配置
 
