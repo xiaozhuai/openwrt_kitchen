@@ -26,24 +26,30 @@ install_by_version() {
 
 install_app_by_cond() {
   if [ "$1" = "true" ]; then
-    echo "  - Install luci-app-$2"
-    opkg install "luci-app-$2"
+    app_pkg="luci-app-$2"
+    echo "  - Install ${app_pkg}"
+    opkg install "${app_pkg}"
     if [ -n "${LUCI_LANGUAGE}" ]; then
-      opkg install "luci-i18n-$2-${LUCI_LANGUAGE}"
+      i18n_pkg="luci-i18n-$2-${LUCI_LANGUAGE}"
+      i18n_pkg_exists="$(opkg list | grep "^${i18n_pkg}")"
+      if [ -n "${i18n_pkg_exists}" ]; then
+        echo "  - Install ${i18n_pkg}"
+        opkg install "${i18n_pkg}"
+      fi
     fi
   fi
 }
 
 download_and_install_by_cond() {
-    if [ "$1" = "true" ]; then
-      echo "  - Install $2"
-      tmp_file="$(mktemp)"
-      rm -f "${tmp_file}"
-      tmp_file="${tmp_file}.ipk"
-      wget -q -O "${tmp_file}" "$2"
-      opkg install "${tmp_file}"
-      rm -f "${tmp_file}"
-    fi
+  if [ "$1" = "true" ]; then
+    echo "  - Install $2"
+    tmp_file="$(mktemp)"
+    rm -f "${tmp_file}"
+    tmp_file="${tmp_file}.ipk"
+    wget -q -O "${tmp_file}" "$2"
+    opkg install "${tmp_file}"
+    rm -f "${tmp_file}"
+  fi
 }
 
 echo "- Prepare ssl"
