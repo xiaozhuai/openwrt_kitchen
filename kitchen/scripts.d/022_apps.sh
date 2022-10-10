@@ -31,7 +31,7 @@ install_app_by_cond "${INSTALL_LUCI_SIMPLE_ADBLOCK}" simple-adblock
 install_app_by_cond "${INSTALL_LUCI_SMART_DNS}" smartdns
 install_app_by_cond "${INSTALL_LUCI_SNMPD}" snmpd
 install_app_by_cond "${INSTALL_LUCI_TRANSMISSION}" transmission
-download_and_install_by_cond "${INSTALL_LUCI_OPENCLASH}" "https://github.com/vernesong/OpenClash/releases/download/v0.45.47-beta/luci-app-openclash_0.45.47-beta_all.ipk"
+download_and_install_by_cond "${INSTALL_LUCI_OPENCLASH}" "https://github.com/vernesong/OpenClash/releases/download/v0.45.59-beta/luci-app-openclash_0.45.59-beta_all.ipk"
 download_and_install_by_cond "${INSTALL_LUCI_ALIDDNS}" "https://github.com/honwen/luci-app-aliddns/releases/download/v20210117/luci-app-aliddns_0.4.0-1_all.ipk"
 install_app_by_cond "${INSTALL_LUCI_DDNS}" ddns
 if [ "${INSTALL_LUCI_DDNS}" = "true" ]; then
