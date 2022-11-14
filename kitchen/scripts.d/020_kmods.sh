@@ -16,3 +16,5 @@ install_by_cond "${INSTALL_KMOD_FS_VFAT}" kmod-fs-vfat
 install_by_cond "${INSTALL_KMOD_FS_EXFAT}" kmod-fs-exfat
 install_by_cond "${INSTALL_KMOD_FS_NTFS}" kmod-fs-ntfs
 install_by_cond "${INSTALL_KMOD_FS_XFS}" kmod-fs-xfs
+
+install_by_cond "${INSTALL_KMOD_MACVLAN}" kmod-macvlan
