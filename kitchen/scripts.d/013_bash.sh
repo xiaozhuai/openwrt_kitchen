@@ -10,7 +10,7 @@ if [ "${INSTALL_BASH}" = "true" ]; then
 
   if [ "${USE_DEFAULT_BASH_PROFILE}" = "true" ]; then
     echo "  - Copy .bash_profile & .bash_profile.d to ${HOME}"
-    cp -f ../assets/.bash_profile /root/
-    cp -rf ../assets/.bash_profile.d /root/
+    cp -f ../prebuilt/.bash_profile /root/
+    cp -rf ../prebuilt/.bash_profile.d /root/
   fi
 fi

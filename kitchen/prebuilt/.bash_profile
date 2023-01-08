@@ -1,4 +1,4 @@
-TERM=xterm-256color
+export TERM=xterm-256color
 
 # source all file in ~/.bash_profile.d
 if [ -d "${HOME}/.bash_profile.d" ]; then
