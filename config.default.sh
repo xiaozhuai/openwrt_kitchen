@@ -1,9 +1,5 @@
 export UPGRADE_ALL=true
 
-export LUCI_TIMEZONE=UTC
-
-export LUCI_LANGUAGE=
-
 export USE_DNSMASQ_FULL=true
 
 export INSTALL_BASH=true
@@ -100,6 +96,13 @@ export INSTALL_LUCI_THEME_BOOTSTRAP=true
 export INSTALL_LUCI_THEME_MATERIAL=true
 export INSTALL_LUCI_THEME_ARGON=true
 export LUCI_THEME=Argon
+
+# system config
+
+export SYSTEM_ZONENAME=UTC
+export SYSTEM_TIMEZONE=
+
+export LUCI_LANGUAGE=
 
 export LUCI_CCACHE_ENABLE=1
 export LUCI_DIAG_URL="openwrt.org"

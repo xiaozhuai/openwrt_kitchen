@@ -5,6 +5,7 @@ kitchen_dir="/tmp/kitchen"
 cd ${kitchen_dir}
 
 . /etc/os-release
+. "${kitchen_dir}/ipk_urls.sh"
 
 fix_resolv_conf() {
   cmp -s /tmp/resolv.conf /tmp/resolv.conf.bak || cp -f /tmp/resolv.conf.bak /tmp/resolv.conf
@@ -42,11 +43,12 @@ install_app_by_cond() {
 
 download_and_install_by_cond() {
   if [ "$1" = "true" ]; then
-    echo "  - Install $2"
-    tmp_file="$(mktemp)"
-    rm -f "${tmp_file}"
-    tmp_file="${tmp_file}.ipk"
-    wget -q -O "${tmp_file}" "$2"
+    file="$2"
+    url="$3"
+    mkdir -p "/tmp/ipk-cache"
+    tmp_file="/tmp/ipk-cache/${file}"
+    echo "  - Install ${file}"
+    wget -q -t 30 -w 5 -O "${tmp_file}" "${url}"
     opkg install "${tmp_file}"
     rm -f "${tmp_file}"
   fi
@@ -75,6 +77,7 @@ for script in *.sh; do
   if [ -r "${script}" ]; then
     echo "- Exec ${script}"
     cd ${kitchen_dir}/scripts.d
+    # shellcheck disable=SC1090
     . "${kitchen_dir}/scripts.d/${script}"
     fix_resolv_conf
   fi
@@ -88,6 +91,7 @@ for script in *.sh; do
   if [ -r "${script}" ]; then
     echo "- Exec ${script}"
     cd ${kitchen_dir}/user_scripts.d
+    # shellcheck disable=SC1090
     . "${kitchen_dir}/user_scripts.d/${script}"
     fix_resolv_conf
   fi

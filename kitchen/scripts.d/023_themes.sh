@@ -1,6 +1,6 @@
 install_by_cond "${INSTALL_LUCI_THEME_BOOTSTRAP}" luci-theme-bootstrap
 install_by_cond "${INSTALL_LUCI_THEME_MATERIAL}" luci-theme-material
-download_and_install_by_cond "${INSTALL_LUCI_THEME_ARGON}" "https://github.com/jerrykuku/luci-theme-argon/releases/download/v2.2.9.4/luci-theme-argon-master_2.2.9.4_all.ipk"
+download_and_install_by_cond "${INSTALL_LUCI_THEME_ARGON}" "${LUCI_THEME_ARGON_IPX_FILE}" "${LUCI_THEME_ARGON_IPX_URL}"
 
 mediaurlbase="$(uci -q get "luci.themes.${LUCI_THEME}" || true)"
 if [ -n "${mediaurlbase}" ]; then
