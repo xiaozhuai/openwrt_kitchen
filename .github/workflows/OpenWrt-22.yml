@@ -16,7 +16,7 @@ jobs:
             base_img_name: 'openwrt-22.03.2-x86-64-generic-ext4-combined'
         steps:
             -   name: Checkout
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     submodules: recursive
             -   name: Download base image
@@ -38,7 +38,7 @@ jobs:
             user_config: 'config.zh-cn.sh'
         steps:
             -   name: Checkout
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     submodules: recursive
             -   name: Apply config ${user_config}
