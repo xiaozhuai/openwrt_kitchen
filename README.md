@@ -26,14 +26,14 @@ OpenWrt厨房，定制您的专属OpenWrt固件，生成可直接刷写的镜像
 
 ## 配置
 
-默认配置位于 `config.default.sh`，如需覆盖配置，请添加一个 `config.user.sh` 文件
+默认配置位于 `config.default.sh`，如需覆盖配置，请新建一个 `config.myconf.sh` 文件
 
 例如：
 
 ```sh
 export LUCI_LANGUAGE=
 ``` 
-默认未配置语言，如果想要改为中文简体，则可以新建 `config.user.sh` 文件并写入
+默认未配置语言，如果想要改为中文简体，则可以新建 `config.myconf.sh` 文件并写入
 
 ```sh
 export LUCI_LANGUAGE="zh-cn"
@@ -67,12 +67,12 @@ git会忽略此目录下的任何更改
 
 需要Linux环境，下载OpenWrt镜像文件，放入 `imgs` 目录。然后执行
 ```sh
-sudo ./openwrt_kitchen.sh imgs/openwrt-21.02.3-x86-64-generic-ext4-combined.img.gz
+sudo ./openwrt_kitchen.sh -i openwrt-21.02.3-x86-64-generic-ext4-combined.img.gz -o openwrt-21.02.3-x86-64-generic-ext4-combined-cooked.img -c myconf
 ```
 
-如果你没有linux环境，则亦可使用docker
+也可以使用docker
 ```sh
-./docker_openwrt_kitchen.sh imgs/openwrt-21.02.3-x86-64-generic-ext4-combined.img.gz
+./docker_openwrt_kitchen.sh -i openwrt-21.02.3-x86-64-generic-ext4-combined.img.gz -o openwrt-21.02.3-x86-64-generic-ext4-combined-cooked.img -c myconf
 ```
 
 ## 如何贡献

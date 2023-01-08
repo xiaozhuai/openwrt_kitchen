@@ -21,15 +21,15 @@ jobs:
                     submodules: recursive
             -   name: Download base image
                 run: |
-                    wget -t 30 -w 5 -O "imgs/${base_img_name}.img.gz" "${base_img_url}"
+                    wget -t 30 -w 5 -O "${base_img_name}.img.gz" "${base_img_url}"
             -   name: Build
                 run: |
-                    ./docker_openwrt_kitchen.sh "imgs/${base_img_name}.img.gz"
+                    ./docker_openwrt_kitchen.sh -i "${base_img_name}.img.gz" -o "${base_img_name}-cooked.img"
             -   name: Upload
                 uses: actions/upload-artifact@v3
                 with:
                     name: ${{env.base_img_name}}
-                    path: dist/${{env.base_img_name}}-cooked.img
+                    path: ${{env.base_img_name}}-cooked.img
     openwrt-21-x86-64-generic-ext4-combined-mbr-zh-cn:
         runs-on: ubuntu-latest
         env:
@@ -41,17 +41,14 @@ jobs:
                 uses: actions/checkout@v3
                 with:
                     submodules: recursive
-            -   name: Apply config ${user_config}
-                run: |
-                    ln -s configs/${user_config} config.user.sh
             -   name: Download base image
                 run: |
-                    wget -t 30 -w 5 -O "imgs/${base_img_name}.img.gz" "${base_img_url}"
+                    wget -t 30 -w 5 -O "${base_img_name}.img.gz" "${base_img_url}"
             -   name: Build
                 run: |
-                    ./docker_openwrt_kitchen.sh "imgs/${base_img_name}.img.gz"
+                    ./docker_openwrt_kitchen.sh -i "${base_img_name}.img.gz" -o "${base_img_name}-cooked.img" -c zh-cn
             -   name: Upload
                 uses: actions/upload-artifact@v3
                 with:
                     name: ${{env.base_img_name}}
-                    path: dist/${{env.base_img_name}}-cooked.img
+                    path: ${{env.base_img_name}}-cooked.img

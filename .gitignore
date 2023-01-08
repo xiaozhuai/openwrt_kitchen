@@ -1,11 +1,8 @@
 .idea
 .vscode
 .DS_Store
+images/
 config.user.sh
-dist/*
-!dist/.gitkeep
-imgs/*
-!imgs/.gitkeep
 rootfs_override/*
 !rootfs_override/.gitkeep
 kitchen/user_scripts.d/*

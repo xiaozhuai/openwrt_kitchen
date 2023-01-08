@@ -1,23 +1,85 @@
 #!/usr/bin/env bash
 set -e
 
+print_usage() {
+  echo "Usage: $(basename "$0") [OPTION]..."
+  echo "Options:"
+  echo "  -i      input image file"
+  echo "  -o      output image file"
+  echo "  -c      user config"
+  echo "  -s      image size in MB (default: ${img_size})"
+  echo "  -f      force overwrite exists output image file"
+}
+
+input_img=""
+output_img=""
+user_config_name=""
+img_size=512 #MB
+force_overwrite_output=false
+
+while getopts ':i:o:c:f' OPTION; do
+  case "${OPTION}" in
+  i)
+    input_img="${OPTARG}"
+    ;;
+  o)
+    output_img="${OPTARG}"
+    ;;
+  c)
+    user_config_name="${OPTARG}"
+    ;;
+  f)
+    force_overwrite_output=true
+    ;;
+  ?)
+    print_usage
+    exit 1
+    ;;
+  esac
+done
+
 base_dir="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
-input_img="$1"
-output_img="$2"
-img_size="512" # MB
+user_config_file=""
 input_img_gzipped=false
 output_img_device=""
 output_img_mount_point=""
 cleaned=false
 
 if [[ -z "${input_img}" ]]; then
-  echo "Usage: customize-openwrt.sh input_img [output_img]"
+  echo "Missing -i option"
+  print_usage
   exit 1
 fi
 
 if [[ ! -f "${input_img}" ]]; then
   echo "File not found, ${input_img}"
   exit 1
+fi
+
+if [[ -z "${output_img}" ]]; then
+  echo "Missing -o option"
+  print_usage
+  exit 1
+fi
+
+if [[ -f "${output_img}" ]]; then
+  if [[ "${force_overwrite_output}" == "true" ]]; then
+    rm "${output_img}"
+  else
+    echo "Output image file already exists, specify -f option to force overwrite it"
+    print_usage
+    exit 1
+  fi
+fi
+
+if [[ -n "${user_config_name}" ]]; then
+  if [[ ! -f "${base_dir}/configs/config.${user_config_name}.sh" ]]; then
+    echo "File not found, configs/config.${user_config_name}.sh"
+    print_usage
+    exit 1
+  else
+    user_config_file="${base_dir}/configs/config.${user_config_name}.sh"
+  fi
 fi
 
 if [[ "${input_img}" == *.gz ]]; then
@@ -29,15 +91,6 @@ fi
 [[ -z "$(which -a parted)" ]] && echo "Please install parted" && exit 1
 
 [[ -z "$(which -a resize2fs)" ]] && echo "Please install resize2fs" && exit 1
-
-if [[ -z "${output_img}" ]]; then
-  if [[ "${input_img_gzipped}" == "true" ]]; then
-    img_file_name="$(basename "${input_img}" .img.gz)"
-  else
-    img_file_name="$(basename "${input_img}" .img)"
-  fi
-  output_img="${base_dir}/dist/${img_file_name}-cooked.img"
-fi
 
 cleanup() {
   local suc="$1"
@@ -71,10 +124,6 @@ cleanup() {
   fi
 }
 trap cleanup EXIT
-
-if [[ -f "${output_img}" ]]; then
-  rm "${output_img}"
-fi
 
 echo "- Create ${output_img}, size: ${img_size}M"
 dd if=/dev/zero of="${output_img}" bs=1M count=${img_size} status=none
@@ -118,9 +167,9 @@ mount --rbind /dev "${output_img_mount_point}/dev"
 mkdir -p "${output_img_mount_point}/var/lock"
 mkdir -p "${output_img_mount_point}/tmp/.uci"
 cp -rf "${base_dir}/kitchen" "${output_img_mount_point}/tmp/"
-cp -f "${base_dir}/config.default.sh" "${output_img_mount_point}/tmp/kitchen/"
-if [[ -f "${base_dir}/config.user.sh" ]]; then
-  cp -f "${base_dir}/config.user.sh" "${output_img_mount_point}/tmp/kitchen/"
+cp -f "${base_dir}/configs/config.default.sh" "${output_img_mount_point}/tmp/kitchen/"
+if [[ -n "${user_config_file}" ]]; then
+  cp -f "${user_config_file}" "${output_img_mount_point}/tmp/kitchen/config.user.sh"
 fi
 echo "nameserver 8.8.8.8" >"${output_img_mount_point}/tmp/resolv.conf"
 echo "nameserver 223.5.5.5" >>"${output_img_mount_point}/tmp/resolv.conf"
