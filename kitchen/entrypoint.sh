@@ -5,7 +5,6 @@ kitchen_dir="/tmp/kitchen"
 cd ${kitchen_dir}
 
 . /etc/os-release
-. "${kitchen_dir}/ipk_urls.sh"
 
 fix_resolv_conf() {
   cmp -s /tmp/resolv.conf /tmp/resolv.conf.bak || cp -f /tmp/resolv.conf.bak /tmp/resolv.conf
@@ -65,11 +64,12 @@ opkg install ca-bundle ca-certificates wget-ssl
 mv -f /etc/opkg/distfeeds.conf.bak /etc/opkg/distfeeds.conf
 cat /etc/opkg/distfeeds.conf
 
-echo "- Load config"
-. ${kitchen_dir}/config.default.sh
-if [ -f "/config.user.sh" ]; then
-  . ${kitchen_dir}/config.user.sh
+echo "- Load configs"
+. "${kitchen_dir}/config.default.sh"
+if [ -f "${kitchen_dir}/config.user.sh" ]; then
+  . "${kitchen_dir}/config.user.sh"
 fi
+. "${kitchen_dir}/ipk_urls.sh"
 
 echo "- Exec scripts"
 cd ${kitchen_dir}/scripts.d
@@ -85,16 +85,18 @@ done
 unset script
 cd ${kitchen_dir}
 
-echo "- Exec user scripts"
-cd ${kitchen_dir}/user_scripts.d
-for script in *.sh; do
-  if [ -r "${script}" ]; then
-    echo "- Exec ${script}"
-    cd ${kitchen_dir}/user_scripts.d
-    # shellcheck disable=SC1090
-    . "${kitchen_dir}/user_scripts.d/${script}"
-    fix_resolv_conf
-  fi
-done
-unset script
-cd ${kitchen_dir}
+if [ -d "${kitchen_dir}/user_scripts.d" ]; then
+  echo "- Exec user scripts"
+  cd ${kitchen_dir}/user_scripts.d
+  for script in *.sh; do
+    if [ -r "${script}" ]; then
+      echo "- Exec ${script}"
+      cd ${kitchen_dir}/user_scripts.d
+      # shellcheck disable=SC1090
+      . "${kitchen_dir}/user_scripts.d/${script}"
+      fix_resolv_conf
+    fi
+  done
+  unset script
+  cd ${kitchen_dir}
+fi

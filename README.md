@@ -24,26 +24,29 @@ OpenWrt厨房，定制您的专属OpenWrt固件，生成可直接刷写的镜像
 * [ ] 支持在网页上定制各项配置，并导出配置
 * [ ] 支持切换用户配置
 
-## 配置
-
-默认配置位于 `config.default.sh`，如需覆盖配置，请新建一个 `config.myconf.sh` 文件
-
-例如：
-
-```sh
-export LUCI_LANGUAGE=
-``` 
-默认未配置语言，如果想要改为中文简体，则可以新建 `config.myconf.sh` 文件并写入
-
-```sh
-export LUCI_LANGUAGE="zh-cn"
-```
-
 ## 烹饪步骤
 
 1. 执行内置脚本
 2. 执行个人脚本
 3. 覆盖一些文件到根目录
+
+### 配置
+
+默认配置文件位于 `configs` 目录下。
+
+所有的配置选项位于 `config.default.sh`，如需覆盖配置，请新建一个 `config.myconf.sh` 文件
+
+**建议在用户自定义配置目录新建配置文件，见后文用户自定义配置**
+
+例如，默认未配置语言
+```sh
+export LUCI_LANGUAGE=
+```
+
+如果想要改为中文简体，则可以新建 `config.myconf.sh` 文件并写入
+```sh
+export LUCI_LANGUAGE="zh-cn"
+```
 
 ### 脚本
 
@@ -53,26 +56,38 @@ export LUCI_LANGUAGE="zh-cn"
 
 你也可以添加自己的脚本，脚本文件的执行顺序通过文件名前3位数字来排序。
 
-### 个人脚本
+### 用户自定义配置
 
-对于非通用的，个人向的脚本，建议添加到 `kitchen/user_scripts.d` 目录下。
+用户自定义配置目录可以覆盖配置文件目录以及脚本目录，还提供了根文件系统覆盖的功能
+创建一个个人配置目录，例如`myopenwrt`，并在此目录下创建`configs`, `rootfs`, `scripts.d`目录。
 
-git会忽略此目录下的任何更改
+#### configs
+用户配置文件目录
 
-### 根目录覆盖
+#### scripts.d
+用户自定义脚本
 
-位于 `rootfs_override` 目录下的所有文件或目录将会覆盖到镜像的根目录下
+#### rootfs
+此文件夹下的所有内容将会覆盖到根文件系统
 
 ## 使用说明
 
-需要Linux环境，下载OpenWrt镜像文件，放入 `imgs` 目录。然后执行
+在linux环境下执行下面的命令
 ```sh
-sudo ./openwrt_kitchen.sh -i openwrt-21.02.3-x86-64-generic-ext4-combined.img.gz -o openwrt-21.02.3-x86-64-generic-ext4-combined-cooked.img -c myconf
+sudo ./openwrt_kitchen.sh \
+  -u myopenwrt \
+  -c myconf \
+  -i openwrt-21.02.3-x86-64-generic-ext4-combined.img.gz \
+  -o openwrt-21.02.3-x86-64-generic-ext4-combined-cooked.img
 ```
 
 也可以使用docker
 ```sh
-./docker_openwrt_kitchen.sh -i openwrt-21.02.3-x86-64-generic-ext4-combined.img.gz -o openwrt-21.02.3-x86-64-generic-ext4-combined-cooked.img -c myconf
+./docker_openwrt_kitchen.sh \
+  -u myopenwrt \
+  -c myconf \
+  -i openwrt-21.02.3-x86-64-generic-ext4-combined.img.gz \
+  -o openwrt-21.02.3-x86-64-generic-ext4-combined-cooked.img
 ```
 
 ## 如何贡献

@@ -2,8 +2,3 @@
 .vscode
 .DS_Store
 images/
-config.user.sh
-rootfs_override/*
-!rootfs_override/.gitkeep
-kitchen/user_scripts.d/*
-!kitchen/user_scripts.d/.gitkeep

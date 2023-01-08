@@ -6,9 +6,11 @@ print_usage() {
   echo "Options:"
   echo "  -i      input image file"
   echo "  -o      output image file"
+  echo "  -u      user custom dir"
   echo "  -c      user config"
   echo "  -s      image size in MB (default: ${img_size})"
   echo "  -f      force overwrite exists output image file"
+  echo ""
 }
 
 input_img=""
@@ -16,14 +18,18 @@ output_img=""
 user_config_name=""
 img_size=512 #MB
 force_overwrite_output=false
+user_custom_dir=""
 
-while getopts ':i:o:c:f' OPTION; do
+while getopts ':i:o:c:d:f' OPTION; do
   case "${OPTION}" in
   i)
     input_img="${OPTARG}"
     ;;
   o)
     output_img="${OPTARG}"
+    ;;
+  d)
+    user_custom_dir="${OPTARG}"
     ;;
   c)
     user_config_name="${OPTARG}"
@@ -46,8 +52,8 @@ output_img_mount_point=""
 cleaned=false
 
 if [[ -z "${input_img}" ]]; then
-  echo "Missing -i option"
   print_usage
+  echo "Missing -i option"
   exit 1
 fi
 
@@ -57,8 +63,8 @@ if [[ ! -f "${input_img}" ]]; then
 fi
 
 if [[ -z "${output_img}" ]]; then
-  echo "Missing -o option"
   print_usage
+  echo "Missing -o option"
   exit 1
 fi
 
@@ -66,19 +72,33 @@ if [[ -f "${output_img}" ]]; then
   if [[ "${force_overwrite_output}" == "true" ]]; then
     rm "${output_img}"
   else
-    echo "Output image file already exists, specify -f option to force overwrite it"
     print_usage
+    echo "Output image file already exists, specify -f option to force overwrite it"
+    exit 1
+  fi
+fi
+
+if [[ -n "${user_custom_dir}" ]]; then
+  if [[ ! -d "${user_custom_dir}" ]]; then
+    print_usage
+    echo "User custom dir non-exists, ${user_custom_dir}"
     exit 1
   fi
 fi
 
 if [[ -n "${user_config_name}" ]]; then
-  if [[ ! -f "${base_dir}/configs/config.${user_config_name}.sh" ]]; then
-    echo "File not found, configs/config.${user_config_name}.sh"
-    print_usage
-    exit 1
-  else
+  if [[ -f "${base_dir}/configs/config.${user_config_name}.sh" ]]; then
     user_config_file="${base_dir}/configs/config.${user_config_name}.sh"
+  fi
+  if [[ -n "${user_custom_dir}" ]]; then
+    if [[ -f "${user_custom_dir}/configs/config.${user_config_name}.sh" ]]; then
+      user_config_file="${user_custom_dir}/configs/config.${user_config_name}.sh"
+    fi
+  fi
+  if [[ -z "${user_config_file}" ]]; then
+    print_usage
+    echo "Config not found: ${user_config_name}"
+    exit 1
   fi
 fi
 
@@ -167,6 +187,9 @@ mount --rbind /dev "${output_img_mount_point}/dev"
 mkdir -p "${output_img_mount_point}/var/lock"
 mkdir -p "${output_img_mount_point}/tmp/.uci"
 cp -rf "${base_dir}/kitchen" "${output_img_mount_point}/tmp/"
+if [[ -n "${user_custom_dir}" ]]; then
+  cp -rf "${user_custom_dir}/scripts.d" "${output_img_mount_point}/tmp/kitchen/user_scripts.d"
+fi
 cp -f "${base_dir}/configs/config.default.sh" "${output_img_mount_point}/tmp/kitchen/"
 if [[ -n "${user_config_file}" ]]; then
   cp -f "${user_config_file}" "${output_img_mount_point}/tmp/kitchen/config.user.sh"
@@ -178,13 +201,14 @@ mkdir "${output_img_mount_point}/tmp/resolv.conf.d"
 
 chroot "${output_img_mount_point}" /tmp/kitchen/entrypoint.sh
 
-if [[ -z "$(ls "${base_dir}/rootfs_override")" ]]; then
-  echo "- Skip copy rootfs_override/* to /"
-else
-  echo "- Copy rootfs_override/* to /"
-  cp -rf "${base_dir}/rootfs_override"/* "${output_img_mount_point}/"
+if [[ -n "${user_custom_dir}" ]]; then
+  if [[ -z "$(ls "${user_custom_dir}/rootfs")" ]]; then
+    echo "- Skip copy ${user_custom_dir}/rootfs/* to /"
+  else
+    echo "- Copy ${user_custom_dir}/rootfs/* to /"
+    cp -rf "${user_custom_dir}/rootfs"/* "${output_img_mount_point}/"
+  fi
 fi
-rm -f "${output_img_mount_point}/.gitkeep"
 
 #chroot "${output_img_mount_point}" /bin/sh
 
