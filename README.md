@@ -8,21 +8,19 @@ OpenWrt厨房，定制您的专属OpenWrt固件，生成可直接刷写的镜像
 
 [![OpenWrt-22](https://github.com/xiaozhuai/openwrt_kitchen/actions/workflows/OpenWrt-22.yml/badge.svg)](https://github.com/xiaozhuai/openwrt_kitchen/actions/workflows/OpenWrt-22.yml)
 
-* 仅支持 `x86-64` 架构
-* 目前仅支持 `ext4` 文件系统的镜像文件
-* 目前仅支持 `mbr` 模式的镜像文件
-* 支持输入经过gzip压缩后的镜像文件
-* 支持 OpenWrt 21.*
-* 支持 OpenWrt 22.*
-* 支持 Docker 构建
-* 支持 Github Actions 构建
-
-## TODO
+* [x] 仅支持 `x86-64` 架构
+* [x] 目前仅支持 `ext4` 文件系统的镜像文件
+* [x] 目前仅支持 `mbr` 模式的镜像文件
+* [x] 支持输入经过gzip压缩后的镜像文件
+* [x] 支持 OpenWrt 21.*
+* [x] 支持 OpenWrt 22.*
+* [x] 支持 Docker 构建
+* [x] 支持 Github Actions 构建
+* [x] 支持自定义镜像文件总容量
+* [x] 支持切换用户配置
 * [ ] 支持 `squashfs` 文件系统的镜像文件
 * [ ] 支持 `efi` 模式的镜像文件
-* [ ] 支持自定义镜像文件总容量
-* [ ] 支持在网页上定制各项配置，并导出配置
-* [ ] 支持切换用户配置
+* [ ] 支持在网页上定制各项配置，并导出配置文件
 
 ## 烹饪步骤
 
