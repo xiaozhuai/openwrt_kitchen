@@ -1,14 +1,30 @@
+##############################################
+
+export ROOT_PASSWORD=""
+
+##############################################
+
 export UPGRADE_ALL=true
 
+##############################################
+
 export USE_DNSMASQ_FULL=true
+
+##############################################
 
 export INSTALL_BASH=true
 export LOGIN_SHELL_BASH=true
 export USE_DEFAULT_BASH_PROFILE=true
 
+##############################################
+
 export USE_OPENSSL=true
 
+##############################################
+
 export INSTALL_BLOCK_MOUNT=true
+
+##############################################
 
 export INSTALL_KMOD_IGC=true
 export INSTALL_KMOD_TUN=true
@@ -27,6 +43,8 @@ export INSTALL_KMOD_FS_NTFS=true
 export INSTALL_KMOD_FS_XFS=true
 export INSTALL_KMOD_MACVLAN=true
 
+##############################################
+
 export INSTALL_ANNOUNCE=true
 export INSTALL_OPENSSH_SFTP_SERVER=true
 export INSTALL_SHADOW_CHSH=true
@@ -40,13 +58,14 @@ export INSTALL_RESIZE2FS=true
 export INSTALL_VIM_VERSION=vim-full
 export INSTALL_ETHTOOL=true
 export INSTALL_ETHINFO=true
-
 export INSTALL_E2FSPROGS=true
 export INSTALL_F2FS_TOOLS=true
 export INSTALL_DOSFSTOOLS=true
 export INSTALL_DOCKER=false
 export INSTALL_DOCKERD=false
 export INSTALL_DOCKER_COMPOSE=false
+
+##############################################
 
 export INSTALL_LUCI_WOL=true
 export INSTALL_LUCI_UHTTPD=true
@@ -92,21 +111,24 @@ export INSTALL_DDNS_SCRIPTS_NOIP=true
 export INSTALL_DDNS_SCRIPTS_NSUPDATE=true
 export INSTALL_DDNS_SCRIPTS_ROUTE53=true
 
+##############################################
+
 export INSTALL_LUCI_THEME_BOOTSTRAP=true
 export INSTALL_LUCI_THEME_MATERIAL=true
 export INSTALL_LUCI_THEME_ARGON=true
-export LUCI_THEME=Argon
 
-# system config
+##############################################
 
 export SYSTEM_ZONENAME=UTC
 export SYSTEM_TIMEZONE=
 
 export LUCI_LANGUAGE=
 
+export LUCI_THEME=Argon
+
 export LUCI_CCACHE_ENABLE=1
 export LUCI_DIAG_URL="openwrt.org"
 
 export NTP_SERVERS="0.openwrt.pool.ntp.org 1.openwrt.pool.ntp.org 2.openwrt.pool.ntp.org 3.openwrt.pool.ntp.org"
 
-export ROOT_PASSWORD=""
+##############################################

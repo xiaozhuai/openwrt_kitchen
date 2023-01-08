@@ -31,17 +31,3 @@
 #  uci add_list system.ntp.server="${server}"
 #done
 #uci commit system
-
-#TODO
-#if [ -z "${ROOT_PASSWORD}" ]; then
-#  passwd root -d
-#else
-#  echo "TODO"
-#fi
-
-echo " Cooked by openwrt_kitchen" >> /etc/banner
-echo " Repo   : https://github.com/xiaozhuai/openwrt_kitchen" >> /etc/banner
-echo " Author : xiaozhuai" >> /etc/banner
-echo " -----------------------------------------------------" >> /etc/banner
-
-#cat /etc/banner

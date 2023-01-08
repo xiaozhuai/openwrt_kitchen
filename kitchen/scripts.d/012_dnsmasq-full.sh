@@ -1,7 +1,7 @@
 if [ "${USE_DNSMASQ_FULL}" = "true" ]; then
   cp -f /etc/hosts /etc/hosts.bak
-  # TODO nslookup ip
-  echo "168.119.138.211 downloads.openwrt.org" >>/etc/hosts
+  feeds_ip="$(nslookup -type=a downloads.openwrt.org | tail -n +3 | sed -n 's/Address:\s*//p' | head -n 1)"
+  echo "${feeds_ip} downloads.openwrt.org" >>/etc/hosts
 
   echo "  - Remove dnsmasq"
   opkg remove dnsmasq

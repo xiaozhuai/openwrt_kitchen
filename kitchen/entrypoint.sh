@@ -4,8 +4,6 @@ set -e
 kitchen_dir="/tmp/kitchen"
 cd ${kitchen_dir}
 
-. /etc/os-release
-
 fix_resolv_conf() {
   cmp -s /tmp/resolv.conf /tmp/resolv.conf.bak || cp -f /tmp/resolv.conf.bak /tmp/resolv.conf
 }
@@ -53,23 +51,13 @@ download_and_install_by_cond() {
   fi
 }
 
-echo "- Prepare ssl"
-cp -f /etc/opkg/distfeeds.conf /etc/opkg/distfeeds.conf.bak
-sed -i 's/https:/http:/' /etc/opkg/distfeeds.conf
-# cat /etc/opkg/distfeeds.conf
-
-opkg update
-opkg install ca-bundle ca-certificates wget-ssl
-
-mv -f /etc/opkg/distfeeds.conf.bak /etc/opkg/distfeeds.conf
-cat /etc/opkg/distfeeds.conf
-
 echo "- Load configs"
 . "${kitchen_dir}/config.default.sh"
 if [ -f "${kitchen_dir}/config.user.sh" ]; then
   . "${kitchen_dir}/config.user.sh"
 fi
 . "${kitchen_dir}/ipk_urls.sh"
+#. /etc/os-release
 
 echo "- Exec scripts"
 cd ${kitchen_dir}/scripts.d
