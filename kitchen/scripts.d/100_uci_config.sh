@@ -18,6 +18,18 @@
 #  uci commit luci
 #fi
 
+if [ -n "${LUCI_THEME}" ]; then
+  echo "  - Set theme ${LUCI_THEME}"
+  mediaurlbase="$(uci -q get "luci.themes.${LUCI_THEME}" || true)"
+  if [ -z "${mediaurlbase}" ]; then
+    echo "Unknown theme ${LUCI_THEME}"
+    exit 1
+  fi
+  uci set luci.main.mediaurlbase="${mediaurlbase}"
+  uci commit luci
+  unset mediaurlbase
+fi
+
 #TODO
 #uci set luci.ccache.enable="${LUCI_CCACHE_ENABLE}"
 #uci set luci.diag.ping="${LUCI_DIAG_URL}"

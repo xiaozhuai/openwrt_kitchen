@@ -7,6 +7,7 @@ if [ "${USE_DNSMASQ_FULL}" = "true" ]; then
     exit 1
   fi
   echo "  - Resolve downloads.openwrt.org ${feeds_ip}"
+  unset feeds_ip
 
   echo "  - Remove dnsmasq"
   opkg remove dnsmasq
