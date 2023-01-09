@@ -188,7 +188,9 @@ mkdir -p "${output_img_mount_point}/var/lock"
 mkdir -p "${output_img_mount_point}/tmp/.uci"
 cp -rf "${base_dir}/kitchen" "${output_img_mount_point}/tmp/"
 if [[ -n "${user_custom_dir}" ]]; then
-  cp -rf "${user_custom_dir}/scripts.d" "${output_img_mount_point}/tmp/kitchen/user_scripts.d"
+  if [ -d "${user_custom_dir}/scripts.d" ]; then
+    cp -rf "${user_custom_dir}/scripts.d" "${output_img_mount_point}/tmp/kitchen/user_scripts.d"
+  fi
 fi
 cp -f "${base_dir}/configs/config.default.sh" "${output_img_mount_point}/tmp/kitchen/"
 if [[ -n "${user_config_file}" ]]; then
@@ -202,11 +204,13 @@ mkdir "${output_img_mount_point}/tmp/resolv.conf.d"
 chroot "${output_img_mount_point}" /tmp/kitchen/entrypoint.sh
 
 if [[ -n "${user_custom_dir}" ]]; then
-  if [[ -z "$(ls "${user_custom_dir}/rootfs")" ]]; then
-    echo "- Skip copy ${user_custom_dir}/rootfs/* to /"
-  else
-    echo "- Copy ${user_custom_dir}/rootfs/* to /"
-    cp -rf "${user_custom_dir}/rootfs"/* "${output_img_mount_point}/"
+  if [ -d "${user_custom_dir}/rootfs" ]; then
+    if [[ -z "$(ls "${user_custom_dir}/rootfs")" ]]; then
+      echo "- Skip copy ${user_custom_dir}/rootfs/* to /, dir is empty"
+    else
+      echo "- Copy ${user_custom_dir}/rootfs/* to /"
+      cp -rf "${user_custom_dir}/rootfs"/* "${output_img_mount_point}/"
+    fi
   fi
 fi
 
