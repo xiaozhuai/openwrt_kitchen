@@ -12,8 +12,8 @@ jobs:
     openwrt-22-x86-64-generic-ext4-combined-mbr:
         runs-on: ubuntu-latest
         env:
-            base_img_url: 'https://downloads.openwrt.org/releases/22.03.2/targets/x86/64/openwrt-22.03.2-x86-64-generic-ext4-combined.img.gz'
-            base_img_name: 'openwrt-22.03.2-x86-64-generic-ext4-combined'
+            base_img_url: 'https://downloads.openwrt.org/releases/22.03.6/targets/x86/64/openwrt-22.03.6-x86-64-generic-ext4-combined.img.gz'
+            base_img_name: 'openwrt-22.03.6-x86-64-generic-ext4-combined'
         steps:
             -   name: Checkout
                 uses: actions/checkout@v3
@@ -33,8 +33,8 @@ jobs:
     openwrt-22-x86-64-generic-ext4-combined-mbr-zh-cn:
         runs-on: ubuntu-latest
         env:
-            base_img_url: 'https://downloads.openwrt.org/releases/22.03.2/targets/x86/64/openwrt-22.03.2-x86-64-generic-ext4-combined.img.gz'
-            base_img_name: 'openwrt-22.03.2-x86-64-generic-ext4-combined-zh-cn'
+            base_img_url: 'https://downloads.openwrt.org/releases/22.03.6/targets/x86/64/openwrt-22.03.6-x86-64-generic-ext4-combined.img.gz'
+            base_img_name: 'openwrt-22.03.6-x86-64-generic-ext4-combined-zh-cn'
             user_config: 'config.zh-cn.sh'
         steps:
             -   name: Checkout
