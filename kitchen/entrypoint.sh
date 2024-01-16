@@ -48,6 +48,18 @@ download_and_install_by_cond() {
     wget -q -t 30 -w 5 -O "${tmp_file}" "${url}"
     opkg install "${tmp_file}"
     rm -f "${tmp_file}"
+    i18n_file="$4"
+    i18n_url="$5"
+    if [ -n "${i18n_file}" ] && [ -n "${i18n_url}" ]; then
+      tmp_file="/tmp/ipk-cache/${i18n_file}"
+      i18n_file_exists=$(wget -q -O /dev/null "${i18n_url}" && echo "true" || echo "false")
+      if [ "${i18n_file_exists}" = "true" ]; then
+        echo "  - Install ${i18n_file}"
+        wget -q -t 30 -w 5 -O "${tmp_file}" "${i18n_url}"
+        opkg install "${tmp_file}"
+        rm -f "${tmp_file}"
+      fi
+    fi
   fi
 }
 
