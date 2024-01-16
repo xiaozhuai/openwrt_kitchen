@@ -12,6 +12,7 @@ OpenWrt厨房，定制您的专属OpenWrt固件，生成可直接刷写的镜像
 * [x] 支持输入经过gzip压缩后的镜像文件
 * [x] 支持 OpenWrt 21.*
 * [x] 支持 OpenWrt 22.*
+* [x] 支持 OpenWrt 23.*
 * [x] 支持 Docker 构建
 * [x] 支持 Github Actions 构建
 * [x] 支持自定义镜像文件总容量
