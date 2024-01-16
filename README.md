@@ -4,9 +4,7 @@ OpenWrt厨房，定制您的专属OpenWrt固件，生成可直接刷写的镜像
 
 可在 [Actions](https://github.com/xiaozhuai/openwrt_kitchen/actions) 页面下载使用默认配置构建的镜像文件.
 
-[![OpenWrt-21](https://github.com/xiaozhuai/openwrt_kitchen/actions/workflows/OpenWrt-21.yml/badge.svg)](https://github.com/xiaozhuai/openwrt_kitchen/actions/workflows/OpenWrt-21.yml)
-
-[![OpenWrt-22](https://github.com/xiaozhuai/openwrt_kitchen/actions/workflows/OpenWrt-22.yml/badge.svg)](https://github.com/xiaozhuai/openwrt_kitchen/actions/workflows/OpenWrt-22.yml)
+[![Build](https://github.com/xiaozhuai/openwrt_kitchen/actions/workflows/Build.yml/badge.svg)](https://github.com/xiaozhuai/openwrt_kitchen/actions/workflows/Build.yml)
 
 * [x] 仅支持 `x86-64` 架构
 * [x] 目前仅支持 `ext4` 文件系统的镜像文件

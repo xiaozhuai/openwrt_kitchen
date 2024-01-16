@@ -1,0 +1,55 @@
+name: Build
+
+on:
+    push:
+        branches: [ master ]
+    pull_request:
+        branches: [ master ]
+    schedule:
+        -   cron: '0 16 * * *'
+
+jobs:
+    OpenWrt:
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                base_img_version:
+                    - '23.05.2'
+                    - '22.03.6'
+                    - '21.02.7'
+                user_config:
+                    - ''
+                    - 'zh-cn'
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v3
+                with:
+                    submodules: recursive
+            -   name: Set env
+                run: |
+                    base_img_url="https://downloads.openwrt.org/releases/${{matrix.base_img_version}}/targets/x86/64/openwrt-${{matrix.base_img_version}}-x86-64-generic-ext4-combined.img.gz"
+                    base_img_name="openwrt-${{matrix.base_img_version}}-x86-64-generic-ext4-combined"
+                    if [ -n "${{matrix.user_config}}" ]; then
+                        cooked_img_name="${base_img_name}-${{matrix.user_config}}-cooked"
+                    else
+                        cooked_img_name="${base_img_name}-cooked"
+                    fi
+                    echo "base_img_url=${base_img_url}" >> $GITHUB_ENV
+                    echo "base_img_name=${base_img_name}" >> $GITHUB_ENV
+                    echo "cooked_img_name=${cooked_img_name}" >> $GITHUB_ENV
+            -   name: Download base image
+                run: |
+                    wget -t 30 -w 5 -O "${base_img_name}.img.gz" "${base_img_url}"
+            -   name: Build
+                run: |
+                    if [ -n "${{matrix.user_config}}" ]; then
+                        ./docker_openwrt_kitchen.sh -i "${base_img_name}.img.gz" -o "${cooked_img_name}.img" -c "${{matrix.user_config}}"
+                    else
+                        ./docker_openwrt_kitchen.sh -i "${base_img_name}.img.gz" -o "${cooked_img_name}.img"
+                    fi
+            -   name: Upload
+                uses: actions/upload-artifact@v3
+                with:
+                    name: ${{env.cooked_img_name}}
+                    path: ${{env.cooked_img_name}}.img
