@@ -170,9 +170,9 @@ output_img_device=$(losetup -Pf --show "${output_img}")
 echo "- Attached ${output_img_device} --> ${output_img}"
 
 echo "- Resize ${output_img_device}p2"
-parted "${output_img_device}" resizepart 2 100%
+parted -s -f "${output_img_device}" resizepart 2 100%
 resize2fs "${output_img_device}p2"
-parted "${output_img_device}" print
+parted -s -f "${output_img_device}" print
 
 echo "- Mount ${output_img_device}p2"
 tmp_mount_point=$(mktemp -d)
