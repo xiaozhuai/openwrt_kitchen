@@ -29,7 +29,7 @@ install_app_by_cond() {
     opkg install "${app_pkg}"
     if [ -n "${LUCI_LANGUAGE}" ]; then
       i18n_pkg="luci-i18n-$2-${LUCI_LANGUAGE}"
-      i18n_pkg_exists="$(opkg list | grep "^${i18n_pkg}")"
+      i18n_pkg_exists="$(opkg list | grep "^${i18n_pkg}" || echo "")"
       if [ -n "${i18n_pkg_exists}" ]; then
         echo "  - Install ${i18n_pkg}"
         opkg install "${i18n_pkg}"
