@@ -1,5 +1,5 @@
-export LUCI_OPENCLASH_IPK_FILE="luci-app-openclash_0.45.157-beta_all.ipk"
-export LUCI_OPENCLASH_IPK_URL="https://github.com/vernesong/OpenClash/releases/download/v0.45.157-beta/luci-app-openclash_0.45.157-beta_all.ipk"
+export LUCI_OPENCLASH_IPK_FILE="luci-app-openclash_0.46.001-beta_all.ipk"
+export LUCI_OPENCLASH_IPK_URL="https://github.com/vernesong/OpenClash/releases/download/v0.46.001-beta/luci-app-openclash_0.46.001-beta_all.ipk"
 
 export LUCI_ALIDDNS_IPK_FILE="luci-app-aliddns_0.4.0-1_all.ipk"
 export LUCI_ALIDDNS_IPK_URL="https://github.com/honwen/luci-app-aliddns/releases/download/v20210117/luci-app-aliddns_0.4.0-1_all.ipk"
