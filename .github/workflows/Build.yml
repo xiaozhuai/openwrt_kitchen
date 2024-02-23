@@ -26,7 +26,7 @@ jobs:
                     - 'zh-cn'
         steps:
             -   name: Checkout
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     submodules: recursive
             -   name: Set env
@@ -57,7 +57,7 @@ jobs:
                         ./docker_openwrt_kitchen.sh -i "${base_img_name}.img.gz" -o "${cooked_img_name}.img"
                     fi
             -   name: Upload
-                uses: actions/upload-artifact@v3
+                uses: actions/upload-artifact@v4
                 with:
                     name: ${{env.cooked_img_name}}
                     path: ${{env.cooked_img_name}}.img
