@@ -15,6 +15,7 @@ if [ "${INSTALL_ETHINFO}" = "true" ]; then
   [ -z "$(which -a ip)" ] && opkg install ip-full
   [ -z "$(which -a ethtool)" ] && opkg install ethtool
   cp -f ../prebuilt/ethinfo /usr/bin/
+  chmod 755 /usr/bin/ethinfo
 fi
 
 install_by_cond "${INSTALL_E2FSPROGS}" e2fsprogs
