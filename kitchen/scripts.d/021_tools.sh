@@ -26,3 +26,5 @@ install_by_cond "${INSTALL_DOCKER}" docker
 install_by_cond "${INSTALL_DOCKERD}" dockerd
 install_by_cond "${INSTALL_DOCKER_COMPOSE}" docker-compose
 
+install_by_cond "${INSTALL_WIREGUARD}" luci-proto-wireguard
+install_by_cond "${INSTALL_ZEROTIER}" zerotier

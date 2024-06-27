@@ -3,7 +3,6 @@ opkg install luci-compat
 
 install_app_by_cond "${INSTALL_LUCI_WOL}" wol
 install_app_by_cond "${INSTALL_LUCI_UHTTPD}" uhttpd
-install_app_by_cond "${INSTALL_LUCI_WIREGUARD}" wireguard
 install_app_by_cond "${INSTALL_LUCI_SAMBA4}" samba4
 install_app_by_cond "${INSTALL_LUCI_MINIDLNA}" minidlna
 install_app_by_cond "${INSTALL_LUCI_UPNP}" upnp
@@ -33,8 +32,6 @@ install_app_by_cond "${INSTALL_LUCI_SNMPD}" snmpd
 install_app_by_cond "${INSTALL_LUCI_TRANSMISSION}" transmission
 download_and_install_by_cond "${INSTALL_LUCI_OPENCLASH}" "${LUCI_OPENCLASH_IPK_FILE}" "${LUCI_OPENCLASH_IPK_URL}"
 download_and_install_by_cond "${INSTALL_LUCI_ALIDDNS}" "${LUCI_ALIDDNS_IPK_FILE}" "${LUCI_ALIDDNS_IPK_URL}"
-download_and_install_by_cond "${INSTALL_LUCI_WRTBWMON}" "${WRTBWMON_IPK_FILE}" "${WRTBWMON_IPK_URL}"
-download_and_install_by_cond "${INSTALL_LUCI_WRTBWMON}" "${LUCI_WRTBWMON_IPK_FILE}" "${LUCI_WRTBWMON_IPK_URL}" "${LUCI_I18N_WRTBWMON_IPK_FILE}" "${LUCI_I18N_WRTBWMON_IPK_URL}"
 install_app_by_cond "${INSTALL_LUCI_DDNS}" ddns
 if [ "${INSTALL_LUCI_DDNS}" = "true" ]; then
   install_by_cond "${INSTALL_DDNS_SCRIPTS}" ddns-scripts

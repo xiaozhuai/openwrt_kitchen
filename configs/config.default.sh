@@ -64,12 +64,13 @@ export INSTALL_DOSFSTOOLS=true
 export INSTALL_DOCKER=false
 export INSTALL_DOCKERD=false
 export INSTALL_DOCKER_COMPOSE=false
+export INSTALL_WIREGUARD=true
+export INSTALL_ZEROTIER=true
 
 ##############################################
 
 export INSTALL_LUCI_WOL=true
 export INSTALL_LUCI_UHTTPD=true
-export INSTALL_LUCI_WIREGUARD=true
 export INSTALL_LUCI_SAMBA4=false
 export INSTALL_LUCI_MINIDLNA=false
 export INSTALL_LUCI_UPNP=true
@@ -99,7 +100,6 @@ export INSTALL_LUCI_SNMPD=false
 export INSTALL_LUCI_TRANSMISSION=false
 export INSTALL_LUCI_OPENCLASH=true
 export INSTALL_LUCI_ALIDDNS=true
-export INSTALL_LUCI_WRTBWMON=true
 export INSTALL_LUCI_DDNS=false
 export INSTALL_DDNS_SCRIPTS=true
 export INSTALL_DDNS_SCRIPTS_CLOUDFLARE=true
