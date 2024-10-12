@@ -15,8 +15,8 @@ jobs:
             fail-fast: false
             matrix:
                 base_img_version:
-                    - '23.05.3'
-                    - '22.03.6'
+                    - '23.05.5'
+                    - '22.03.7'
                     - '21.02.7'
                 boot:
                     - 'efi'
