@@ -1,10 +1,10 @@
 export TERM=xterm-256color
 
-# source all file in ~/.bash_profile.d
+# source all sh files in ~/.bash_profile.d
 if [ -d "${HOME}/.bash_profile.d" ]; then
-    for i in "${HOME}/.bash_profile.d"/*; do
-        if [ -r "$i" ]; then
-            source "$i"
+    for i in ${HOME}/.bash_profile.d/*.sh; do
+        if [ -r $i ]; then
+            . $i
         fi
     done
     unset i
