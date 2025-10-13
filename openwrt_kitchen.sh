@@ -160,19 +160,33 @@ else
   dd if="${input_img}" of="${output_img_device}" bs=4M status=none
 fi
 sync
-
-echo "- Detach ${output_img_device} --> ${output_img}"
-losetup -d "${output_img_device}"
-output_img_device=""
-
-echo "- Attach ${output_img}"
-output_img_device=$(losetup -Pf --show "${output_img}")
-echo "- Attached ${output_img_device} --> ${output_img}"
+partprobe "${output_img_device}"
 
 echo "- Resize ${output_img_device}p2"
 parted -s -f "${output_img_device}" resizepart 2 100%
-resize2fs "${output_img_device}p2"
 parted -s -f "${output_img_device}" print
+sync
+partprobe "${output_img_device}"
+
+echo "- Check ${output_img_device}p2"
+e2fsck -f -p /dev/loop0p2 || {
+    rc=$?
+    case $rc in
+        0|1)
+            ;;
+        *)
+            echo "e2fsck exited with $rc"
+            exit $rc
+            ;;
+    esac
+}
+sync
+partprobe "${output_img_device}"
+
+echo "- Resize2fs ${output_img_device}p2"
+resize2fs "${output_img_device}p2"
+sync
+partprobe "${output_img_device}"
 
 echo "- Mount ${output_img_device}p2"
 tmp_mount_point=$(mktemp -d)
