@@ -161,12 +161,14 @@ else
 fi
 sync
 partprobe "${output_img_device}"
+sleep 3
 
 echo "- Resize ${output_img_device}p2"
 parted -s -f "${output_img_device}" resizepart 2 100%
 parted -s -f "${output_img_device}" print
 sync
 partprobe "${output_img_device}"
+sleep 3
 
 echo "- Check ${output_img_device}p2"
 e2fsck -f -p /dev/loop0p2 || {
@@ -182,11 +184,13 @@ e2fsck -f -p /dev/loop0p2 || {
 }
 sync
 partprobe "${output_img_device}"
+sleep 3
 
 echo "- Resize2fs ${output_img_device}p2"
 resize2fs "${output_img_device}p2"
 sync
 partprobe "${output_img_device}"
+sleep 3
 
 echo "- Mount ${output_img_device}p2"
 tmp_mount_point=$(mktemp -d)
