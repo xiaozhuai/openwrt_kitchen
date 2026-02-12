@@ -1,5 +1,3 @@
-export TERM=xterm-256color
-
 # source all sh files in ~/.bash_profile.d
 if [ -d "${HOME}/.bash_profile.d" ]; then
     for i in ${HOME}/.bash_profile.d/*.sh; do
